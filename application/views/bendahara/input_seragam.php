@@ -1,0 +1,300 @@
+<div class="page-content">
+    <?= $this->session->flashdata('message'); ?>
+    <!-- <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">
+                    <h3 class="text-danger">KWITANSI DI CEK LAGI KAYAK E MASIH AMBURADUL! OKE.</h3>
+                    <h3 class="text-danger">Kalo OKE Tinggal Copas ke pembayaran seragam yak.</h3>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    <form action="<?= base_url('bendahara/input_seragam'); ?>" method="POST">
+        <section id="input-with-icons">
+            <div class="row match-height">
+                <div class="col-7">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Input Seragam</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="row mb-2">
+                                <div class="col-md-4">
+                                    <label>Pilih Nama Siswa</label>
+                                </div>
+                                <div class="col-md-8 form-group">
+                                    <div class="form-group">
+                                        <select class="choices form-select" name="siswa_id" id="siswa_id">
+                                            <option value="">-- Pilih Nama Siswa --</option>
+                                            <?php foreach ($siswa_baru as $sb) : ?>
+                                                <?php if ($sb['status_verif'] == 'Proses Pembayaran') : ?>
+                                                    <option value="<?= $sb['id_siswa']; ?>">[<?= $sb['nisn']; ?>] <?= $sb['nama']; ?></option>
+                                                <?php endif; ?>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                    <?= form_error('siswa_id', '<div class="alert alert-danger alert-dismissible show fade"><button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>', '</div>'); ?>
+                                </div>
+                            </div>
+
+                            <div class="row mb-2">
+                                <div class="col-md-4">
+                                    <label>Cicilan 1</label>
+                                </div>
+                                <div class="col-md-8 form-group">
+                                    <div class="form-group position-relative has-icon-right">
+                                        <!-- <input type="number" class="form-control" name="c1_seragam" id="c1_seragam" autocomplete="off" placeholder="0" value="<?= set_value('c1_seragam'); ?>" onkeyup="sum();"> -->
+                                        <input type="number" class="form-control" name="cicilan_1" id="cicilan_1" autocomplete="off" placeholder="0" value="<?= set_value('cicilan_1'); ?>" onkeyup="sum();">
+                                        <div class="form-control-icon">
+                                            <i class="fas fa-donate"></i>
+                                        </div>
+                                    </div>
+                                    <!-- <?= form_error('c1_seragam', '<div class="alert alert-danger alert-dismissible show fade"><button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>', '</div>'); ?> -->
+                                    <?= form_error('cicilan_1', '<div class="alert alert-danger alert-dismissible show fade"><button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>', '</div>'); ?>
+                                </div>
+                            </div>
+
+                            <div class="row mb-2">
+                                <div class="col-md-4">
+                                    <label>Cicilan 2</label>
+                                </div>
+                                <div class="col-md-8 form-group">
+                                    <div class="form-group position-relative has-icon-right">
+                                        <!-- <input type="number" class="form-control" name="c2_seragam" id="c2_seragam" autocomplete="off" value="0" readonly onkeyup="sum();"> -->
+                                        <input type="number" class="form-control" name="cicilan_2" id="cicilan_2" autocomplete="off" value="0" readonly onkeyup="sum();">
+                                        <div class="form-control-icon">
+                                            <i class="fas fa-donate"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mb-2">
+                                <div class="col-md-4">
+                                    <label>Cicilan 3</label>
+                                </div>
+                                <div class="col-md-8 form-group">
+                                    <div class="form-group position-relative has-icon-right">
+                                        <!-- <input type="number" class="form-control" name="c3_seragam" id="c3_seragam" autocomplete="off" value="0" readonly onkeyup="sum();"> -->
+                                        <input type="number" class="form-control" name="cicilan_3" id="cicilan_3" autocomplete="off" value="0" readonly onkeyup="sum();">
+                                        <div class="form-control-icon">
+                                            <i class="fas fa-donate"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mb-2">
+                                <div class="col-md-4">
+                                    <label>Jumlah</label>
+                                </div>
+                                <div class="col-md-8 form-group">
+                                    <div class="form-group position-relative has-icon-right">
+                                        <!-- <input type="number" class="form-control" name="jumlah_seragam" id="jumlah_seragam" autocomplete="off" value="0" readonly> -->
+                                        <input type="number" class="form-control" name="jumlah_total" id="jumlah_total" autocomplete="off" value="0" readonly>
+                                        <div class="form-control-icon">
+                                            <i class="fas fa-donate"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mb-2">
+                                <div class="col-md-12">
+                                    <div class="d-flex justify-content-end">
+                                        <button type="submit" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Simpan</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-5">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Input Seragam</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="row mb-2">
+                                <div class="col-md-12">
+                                    <h6>Untuk Pembayaran</h6>
+                                    <div class="form-group">
+                                        <select class="choices form-select" name="jenis_pembayaran" id="jenis_pembayaran">
+                                            <option value="">-- Pilih Jenis Pembayaran --</option>
+                                            <?php foreach ($jenis_pembayaran_seragam as $jp) : ?>
+                                                <option value="<?= $jp; ?>"><?= $jp; ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
+                                    </div>
+                                    <?= form_error('jenis_pembayaran', '<div class="alert alert-danger alert-dismissible show fade"><button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>', '</div>'); ?>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h6>Uang Yang Diterima</h6>
+                                    <div class="form-group position-relative has-icon-right">
+                                        <input type="number" class="form-control" placeholder="0" name="uang_cicilan_1" id="uang_cicilan_1" autocomplete="off" value="<?= set_value('uang_cicilan_1'); ?>">
+                                        <div class="form-control-icon">
+                                            <i class="fas fa-donate"></i>
+                                        </div>
+                                    </div>
+                                    <?= form_error('uang_cicilan_1', '<div class="alert alert-danger alert-dismissible show fade"><button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>', '</div>'); ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </form>
+
+    <section class="section">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Daftar Biaya</h4>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-striped" id="table1">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">No</th>
+                                    <th class="text-center">Nama Siswa</th>
+                                    <th class="text-center">Jenis Pembayaran</th>
+                                    <th class="text-center">Total Pembayaran</th>
+                                    <!-- <th class="text-center">Tanggal Pembayaran</th> -->
+                                    <th class="text-center">Aksi/Keterangan</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php $i = 1; ?>
+                                <?php if (empty($pembayaran)) : ?>
+                                    <tr>
+                                        <td colspan="5">
+                                            <div class="alert alert-danger" role="alert">
+                                                Data Tidak Ditemukan.
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <?php endif; ?>
+                                <?php $jumlah = 0; ?>
+                                <?php foreach ($pembayaran as $seragam) : ?>
+                                    <?php if ($seragam['ket_jenis_pemb'] == 'Pembayaran Seragam') : ?>
+                                        <tr>
+                                            <td><?= $i++; ?></td>
+                                            <td><?= $seragam['nama']; ?></td>
+                                            <td class="text-center"><?= $seragam['jenis_pembayaran']; ?></td>
+                                            <td class="text-center">Rp. <?= number_format($seragam['total_bayar'], 0, ',', '.'); ?> ,-</td>
+                                            <?php $jumlah += $seragam['total_bayar']; ?>
+                                            <!-- <td class="text-center"><?= date('d M Y', $seragam['tgl_bayar']); ?></td> -->
+                                            <td class="text-center">
+                                                <?php if ($seragam['jenis_kelamin'] == 'Laki-Laki') : ?>
+                                                    <?php if ($seragam['total_bayar'] >= $biaya_seragam['nominal_seragam']) : ?>
+                                                        <span class="badge bg-success">LUNAS</span>
+                                                        <a href="<?= base_url('bendahara/kwitansi_lunas/') . $seragam['id_bayar']; ?>" class="badge bg-info" target="_blank">Kwi. Lunas</i></a>
+                                                        <a href="<?= base_url('bendahara/kwitansi_ci3/') . $seragam['id_bayar']; ?>" class="badge bg-info" target="_blank">Kwi. Cicilan 3</i></a>
+                                                        <a href="" class="badge bg-danger" data-bs-toggle="modal" data-bs-target="#hapus_bayar<?= $seragam['id_bayar']; ?>"><i class="fas fa-trash-alt"></i></a>
+                                                    <?php elseif ($seragam['total_bayar'] <= $biaya_seragam['nominal_seragam']) : ?>
+                                                        <?php if ($seragam['cicilan_kedua'] == '0') : ?>
+                                                            <span class="badge bg-secondary">Belum Lunas</span>
+                                                            <a href="<?= base_url('bendahara/cicilan2_seragam/') . $seragam['id_bayar']; ?>" class="badge bg-warning">Cicilan 2</a>
+                                                            <a href="<?= base_url('bendahara/kwitansi_ci1/') . $seragam['id_bayar']; ?>" class="badge bg-info" target="_blank">Kwi. Cicilan 1</i></a>
+                                                            <a href="" class="badge bg-danger" data-bs-toggle="modal" data-bs-target="#hapus_bayar<?= $seragam['id_bayar']; ?>"><i class="fas fa-trash-alt"></i></a>
+                                                        <?php elseif ($seragam['cicilan_ketiga'] == '0') : ?>
+                                                            <span class="badge bg-secondary">Belum Lunas</span>
+                                                            <a href="<?= base_url('bendahara/cicilan3_seragam/') . $seragam['id_bayar']; ?>" class="badge bg-warning">Cicilan 3</a>
+                                                            <a href="<?= base_url('bendahara/kwitansi_ci2/') . $seragam['id_bayar']; ?>" class="badge bg-info" target="_blank">Kwi. Cicilan 2</i></a>
+                                                            <a href="" class="badge bg-danger" data-bs-toggle="modal" data-bs-target="#hapus_bayar<?= $seragam['id_bayar']; ?>"><i class="fas fa-trash-alt"></i></a>
+                                                        <?php endif; ?>
+                                                    <?php endif; ?>
+                                                <?php elseif ($seragam['jenis_kelamin'] == 'Perempuan') : ?>
+                                                    <?php if ($seragam['total_bayar'] >= $biaya_perempuan['nominal_seragam2']) : ?>
+                                                        <span class="badge bg-success">LUNAS</span>
+                                                        <a href="<?= base_url('bendahara/kwitansi_lunas/') . $seragam['id_bayar']; ?>" class="badge bg-info" target="_blank">Kwi. Lunas</i></a>
+                                                        <a href="<?= base_url('bendahara/kwitansi_ci3/') . $seragam['id_bayar']; ?>" class="badge bg-info" target="_blank">Kwi. Cicilan 3</i></a>
+                                                        <a href="" class="badge bg-danger" data-bs-toggle="modal" data-bs-target="#hapus_bayar<?= $seragam['id_bayar']; ?>"><i class="fas fa-trash-alt"></i></a>
+                                                    <?php elseif ($seragam['total_bayar'] <= $biaya_perempuan['nominal_seragam2']) : ?>
+                                                        <?php if ($seragam['cicilan_kedua'] == '0') : ?>
+                                                            <span class="badge bg-secondary">Belum Lunas</span>
+                                                            <a href="<?= base_url('bendahara/cicilan2_seragam/') . $seragam['id_bayar']; ?>" class="badge bg-warning">Cicilan 2</a>
+                                                            <a href="<?= base_url('bendahara/kwitansi_ci1/') . $seragam['id_bayar']; ?>" class="badge bg-info" target="_blank">Kwi. Cicilan 1</i></a>
+                                                            <a href="" class="badge bg-danger" data-bs-toggle="modal" data-bs-target="#hapus_bayar<?= $seragam['id_bayar']; ?>"><i class="fas fa-trash-alt"></i></a>
+                                                        <?php elseif ($seragam['cicilan_ketiga'] == '0') : ?>
+                                                            <span class="badge bg-secondary">Belum Lunas</span>
+                                                            <a href="<?= base_url('bendahara/cicilan3_seragam/') . $seragam['id_bayar']; ?>" class="badge bg-warning">Cicilan 3</a>
+                                                            <a href="<?= base_url('bendahara/kwitansi_ci2/') . $seragam['id_bayar']; ?>" class="badge bg-info" target="_blank">Kwi. Cicilan 2</i></a>
+                                                            <a href="" class="badge bg-danger" data-bs-toggle="modal" data-bs-target="#hapus_bayar<?= $seragam['id_bayar']; ?>"><i class="fas fa-trash-alt"></i></a>
+                                                        <?php endif; ?>
+                                                    <?php endif; ?>
+                                                <?php endif; ?>
+                                            </td>
+                                        </tr>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            </tbody>
+                            <tr>
+                                <td colspan="3" class="text-center">
+                                    <strong>Total</strong>
+                                </td>
+                                <td class="text-center"> <strong> Rp. <?= number_format($jumlah, 0, ',', '.'); ?>,- </strong></td>
+                                <td class="text-center"> <strong>Aksi/Keterangan</strong></td>
+                            </tr>
+                        </table>
+                        <div class="row">
+                            <strong class="text-danger">* Apakah ada note untuk pembayaran ? Misalkan Harus minimal cicilan 1 dengan nominal Rp. 100.000,- </strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<?php foreach ($pembayaran as $seragam) : ?>
+    <div class="modal fade text-left" id="hapus_bayar<?= $seragam['id_bayar']; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-info">
+                    <h5 class="modal-title white" id="myModalLabel1">Hapus Pembayaran</h5>
+                    <button type="button" class="close rounded-pill" data-bs-dismiss="modal" aria-label="Close">
+                        <i data-feather="x"></i>
+                    </button>
+                </div>
+                <form action="<?= base_url('bendahara/hapus_pembayaran/') . $seragam['id_bayar']; ?>" method="POST">
+                    <div class="modal-body">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="col-lg-12">
+                                    <div class="row">
+                                        <p>Apakah Anda akan menghapus data pembayaran atas nama <strong><?= $seragam['nama']; ?></strong> ?</p>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="form-floating">
+                                                <input type="hidden" class="form-control" value="Hapus" id="keterangan" name="keterangan">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+                            <i class="bx bx-x d-block d-sm-none"></i>
+                            <span class="d-none d-sm-block">Batal</span>
+                        </button>
+                        <button type="submit" class="btn btn-info ml-1">
+                            <i class="bx bx-check d-block d-sm-none"></i>
+                            <span class="d-none d-sm-block">Hapus</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+<?php endforeach; ?>
